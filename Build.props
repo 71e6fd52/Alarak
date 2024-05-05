@@ -1,0 +1,13 @@
+<Project>
+    <PropertyGroup>
+        <!-- IMPORTANT: Should point to <Barotrauma_Install>\LocalMods\<MyModName>\ -->
+        <!-- IMPORTANT: ModDeplyDir Path must end with '\' -->
+        <ModDeployDir>C:\Program Files (x86)\Steam\steamapps\common\Barotrauma\LocalMods\Alarak\</ModDeployDir>
+        <!-- IMPORTANT: Avoid the use of special (IE: / : ; , \ < > ?) (periods "." are good) and non-english characters in the AssemblyName.-->
+        <AssemblyName>Alarak</AssemblyName>
+        
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+</Project>
