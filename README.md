@@ -1,6 +1,14 @@
-# Teleport Duffel Bag Items
+# Alarak Soul Absorption
 
-Automatic teleport items in duffel bags to the corresponding character's inventory after the character respawns.
-Character is determined by the character's name.
+The bot will die instead of the player character.
 
-This mod is designed for working with [MCM](https://steamcommunity.com/sharedfiles/filedetails/?id=2775613786).
+## Background
+In SC2 Co-op, Alarak has an ability called Soul Absorption that steals life from nearby units you control to heal himself when he is near death.
+
+This mod was inspired by this ability.
+
+## Feature
+* When a player-controlled character will not die. Instead, the bot will die.
+* The player character and bot's health status will be swapped.
+* The player character will be invulnerable for a short time.
+* The player character and bot will exchange positions.
