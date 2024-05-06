@@ -13,7 +13,7 @@ public partial class Plugin : IAssemblyPlugin
     private static readonly MethodBase rKill =
         LuaCsHook.ResolveMethod("Barotrauma.Character", "Kill", null);
     
-    // private static readonly FieldInfo rCharacter = typeof(CharacterHealth).GetField("character", BindingFlags.Instance | BindingFlags.Public)!;
+    private static readonly FieldInfo rCharacter = typeof(CharacterHealth).GetField("Character", BindingFlags.Instance | BindingFlags.Public) ?? throw new InvalidOperationException();
 
     private void InitServer()
     {
@@ -45,25 +45,25 @@ public partial class Plugin : IAssemblyPlugin
                 bot.TeleportTo(character.WorldPosition);
                 character.TeleportTo(botPos);
                 
-                // (character.CharacterHealth, bot.CharacterHealth) = (bot.CharacterHealth, character.CharacterHealth);
-                // rCharacter.SetValue(character.CharacterHealth, character);
-                // rCharacter.SetValue(bot.CharacterHealth, bot);
+                (character.CharacterHealth, bot.CharacterHealth) = (bot.CharacterHealth, character.CharacterHealth);
+                rCharacter.SetValue(character.CharacterHealth, character);
+                rCharacter.SetValue(bot.CharacterHealth, bot);
                 
-                character.Revive(createNetworkEvent: true);
-                bot.Kill(
-                    (CauseOfDeathType)ptable["causeOfDeath"],
-                    ptable["causeOfDeathAffliction"] as Affliction,
-                    false, 
-                    (bool)ptable["log"]
-                );
+                // another implementation
+                // character.Revive(createNetworkEvent: true);
+                // bot.Kill(
+                //     (CauseOfDeathType)ptable["causeOfDeath"],
+                //     ptable["causeOfDeathAffliction"] as Affliction,
+                //     false, 
+                //     (bool)ptable["log"]
+                // );
 
                 character.CharacterHealth.Unkillable = true; // prevent the character from being killed more than once in one tick
                 
                 GameMain.LuaCs.Timer.Wait(args => character.CharacterHealth.Unkillable = false, 1000);
                 
-                // Revive() and Kill() already send network events
-                // GameMain.NetworkMember.CreateEntityEvent(character, new Character.CharacterStatusEventData());
-                // GameMain.NetworkMember.CreateEntityEvent(bot, new Character.CharacterStatusEventData());
+                GameMain.NetworkMember.CreateEntityEvent(character, new Character.CharacterStatusEventData());
+                GameMain.NetworkMember.CreateEntityEvent(bot, new Character.CharacterStatusEventData());
 
                 return null;
             }
